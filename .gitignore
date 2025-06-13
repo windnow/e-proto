@@ -1,0 +1,21 @@
+.DS_Store
+Thumbs.db
+
+*~
+*.swp
+*.swp.*
+.vscode/
+.idea/
+*.iml
+
+vendor/
+*.exe
+*.dll
+*.so
+*.dylib
+
+*.log
+*.coverprofile
+
+# скрипты – без игнорирования, но можно защитить от замены прав
+!tools/gen.sh

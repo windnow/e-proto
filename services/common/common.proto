@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package common;
+option go_package = "github.com/windnow/e-proto/pb/common;commonpb";
+
+message GUID {
+    string value = 1;
+}
+

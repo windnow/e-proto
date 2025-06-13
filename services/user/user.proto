@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package user;
+option go_package = "github.com/windnow/e-proto/pb/user;userpb";
+
+import "common/common.proto";
+
+message User {
+    common.GUID ref = 1;
+    string email      = 2;
+    string full_name  = 3;
+}
+
+message GetUserRequest {
+    common.GUID ref = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+service UserService {
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc CreateUser(User)        returns (GetUserResponse);
+}
