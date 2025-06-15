@@ -531,6 +531,7 @@ type BulkCreateSummary struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CreateCount   int32                  `protobuf:"varint,1,opt,name=create_count,json=createCount,proto3" json:"create_count,omitempty"`
 	ErrorCount    int32                  `protobuf:"varint,2,opt,name=error_count,json=errorCount,proto3" json:"error_count,omitempty"`
+	Errors        []string               `protobuf:"bytes,3,rep,name=errors,proto3" json:"errors,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -577,6 +578,13 @@ func (x *BulkCreateSummary) GetErrorCount() int32 {
 		return x.ErrorCount
 	}
 	return 0
+}
+
+func (x *BulkCreateSummary) GetErrors() []string {
+	if x != nil {
+		return x.Errors
+	}
+	return nil
 }
 
 type CountUsersRequest struct {
@@ -695,11 +703,12 @@ const file_user_user_proto_rawDesc = "" +
 	"\x04refs\x18\x01 \x03(\v2\f.common.GUIDR\x04refs\"9\n" +
 	"\x15BatchGetUsersResponse\x12 \n" +
 	"\x05users\x18\x01 \x03(\v2\n" +
-	".user.UserR\x05users\"W\n" +
+	".user.UserR\x05users\"o\n" +
 	"\x11BulkCreateSummary\x12!\n" +
 	"\fcreate_count\x18\x01 \x01(\x05R\vcreateCount\x12\x1f\n" +
 	"\verror_count\x18\x02 \x01(\x05R\n" +
-	"errorCount\"\x13\n" +
+	"errorCount\x12\x16\n" +
+	"\x06errors\x18\x03 \x03(\tR\x06errors\"\x13\n" +
 	"\x11CountUsersRequest\"*\n" +
 	"\x12CountUsersResponse\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\x03R\x05total2\xec\x04\n" +
