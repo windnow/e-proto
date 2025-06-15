@@ -4,6 +4,7 @@ package user;
 option go_package = "github.com/windnow/e-proto/pb/user;userpb";
 
 import "common/common.proto";
+import "google/protobuf/empty.proto"; 
 
 message User {
     common.GUID ref = 1;
@@ -11,15 +12,68 @@ message User {
     string full_name  = 3;
 }
 
+message CreateUserRequest {
+    string full_name = 1;
+    string email     = 2;
+}
+
 message GetUserRequest {
     common.GUID ref = 1;
 }
-
 message GetUserResponse {
     User user = 1;
 }
 
+message ListUserRequest {
+    int32  page_size  = 1;
+    string page_token = 2;
+}
+message ListUserResponse {
+    repeated common.Reference users           = 1;
+    string                    next_page_token = 2;
+}
+
+message SearchUserRequest {
+    string query      = 1;
+    int32  page_size  = 2;
+    string page_token = 3;
+}
+message SearchUserResponse {
+    repeated common.Reference users           = 1;
+    string                    next_page_token = 2;
+}
+
+message BatchGetUsersRequest  {
+    repeated common.GUID refs = 1; 
+}
+message BatchGetUsersResponse {
+    repeated User users = 1;
+}
+
+message BulkCreateSummary {
+    int32 create_count = 1;
+    int32 error_count  = 2;
+}
+
+message CountUsersRequest {}
+message CountUsersResponse {
+    int64 total = 1;
+}
+
 service UserService {
-    rpc GetUser(GetUserRequest) returns (GetUserResponse);
-    rpc CreateUser(User)        returns (GetUserResponse);
+    rpc GetUser     (GetUserRequest)    returns (GetUserResponse);
+    rpc CreateUser  (CreateUserRequest) returns (GetUserResponse);
+    rpc UpdateUser  (User)              returns (GetUserResponse);
+    rpc DeleteUser  (common.GUID)       returns (google.protobuf.Empty);
+
+    rpc ListUsers   (ListUserRequest)   returns (ListUserResponse);
+    rpc SearchUsers (SearchUserRequest) returns (SearchUserResponse);
+
+    rpc BatchGetUsers (BatchGetUsersRequest) returns (BatchGetUsersResponse);
+
+    rpc BulkCreateUsers (stream CreateUserRequest) returns (BulkCreateSummary);
+
+    rpc CountUsers (CountUsersRequest) returns (CountUsersResponse);
+
+    rpc StreamUsers (ListUserRequest) returns (stream User);
 }
