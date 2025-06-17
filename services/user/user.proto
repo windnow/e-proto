@@ -56,7 +56,9 @@ message BulkCreateSummary {
     repeated string errors       = 3;
 }
 
-message CountUsersRequest {}
+message CountUsersRequest {
+    string query = 1;
+}
 message CountUsersResponse {
     int64 total = 1;
 }

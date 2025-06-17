@@ -589,6 +589,7 @@ func (x *BulkCreateSummary) GetErrors() []string {
 
 type CountUsersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Query         string                 `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -621,6 +622,13 @@ func (x *CountUsersRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CountUsersRequest.ProtoReflect.Descriptor instead.
 func (*CountUsersRequest) Descriptor() ([]byte, []int) {
 	return file_user_user_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CountUsersRequest) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
 }
 
 type CountUsersResponse struct {
@@ -708,8 +716,9 @@ const file_user_user_proto_rawDesc = "" +
 	"\fcreate_count\x18\x01 \x01(\x05R\vcreateCount\x12\x1f\n" +
 	"\verror_count\x18\x02 \x01(\x05R\n" +
 	"errorCount\x12\x16\n" +
-	"\x06errors\x18\x03 \x03(\tR\x06errors\"\x13\n" +
-	"\x11CountUsersRequest\"*\n" +
+	"\x06errors\x18\x03 \x03(\tR\x06errors\")\n" +
+	"\x11CountUsersRequest\x12\x14\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\"*\n" +
 	"\x12CountUsersResponse\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\x03R\x05total2\xec\x04\n" +
 	"\vUserService\x126\n" +
