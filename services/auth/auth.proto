@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/windnow/e-proto/pb/auth;authpb";
+
+import "google/protobuf/empty.proto"; 
+
+message LoginSelfRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginOAuthRequest {
+    string provider = 1;
+    string code     = 2;
+}
+
+message TokenPair {
+    string access_token       = 1;
+    string refresh_token      = 2;
+    int64  access_expires_at  = 3;
+    int64  refresh_expires_at = 4;
+}
+
+message RefreshTokenRequest {
+    string refresh_token = 1;
+}
+
+message LoginRequest {
+    string refresh_token = 1;
+}
+
+message LogoutRequest {
+    string refresh_token = 1;
+}
+
+message SessionInfo {
+    string session_id = 1;
+    string provider   = 2;
+    int64  created_at = 3;
+    int64  expires_at = 4;
+    string user_agent = 5;
+    string ip_address = 6;
+    bool   current    = 7;
+}
+
+message ListSessionsResponse {
+    repeated SessionInfo sessions = 1;
+}
+
+message IntrospectRequest { 
+    string access_token = 1;
+}
+
+message IntrospectResponse {
+    bool   active      = 1;
+    string user_guid   = 2;
+    string provider    = 3;
+    int64  expires_at  = 4;
+    string description = 5;
+}
+
+service AuthService {
+    rpc LoginSelf    (LoginSelfRequest)       returns (TokenPair);
+    rpc LoginOAuth   (LoginOAuthRequest)      returns (TokenPair);
+    rpc Refresh      (RefreshTokenRequest)    returns (TokenPair);
+    rpc Logout       (LogoutRequest)          returns (.google.protobuf.Empty);
+    rpc ListSessions (.google.protobuf.Empty) returns (ListSessionsResponse);
+    rpc Introspect   (IntrospectRequest)      returns (IntrospectResponse);
+
+}
